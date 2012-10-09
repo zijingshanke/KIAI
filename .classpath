@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="defaultroot/META-INF/lib/liquidlnf.jar"/>
+	<classpathentry kind="lib" path="defaultroot/META-INF/lib/msbase.jar"/>
+	<classpathentry kind="lib" path="defaultroot/META-INF/lib/mssqlserver.jar"/>
+	<classpathentry kind="lib" path="defaultroot/META-INF/lib/msutil.jar"/>
+	<classpathentry kind="output" path="defaultroot/META-INF/classes"/>
+</classpath>

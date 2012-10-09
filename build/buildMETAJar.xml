@@ -1,0 +1,115 @@
+<?xml version="1.0"  encoding="UTF-8" ?>
+<project name="insurance" basedir="." default="dist">
+
+	<property name="app.name" value="insurance" />
+	<property name="root.dir" location="E:/project/insurance" />
+	<property name="app.dir" location="${root.dir}/defaultroot" />
+	<property name="generated.dir" location="${root.dir}/generated" />
+	<property name="build.classpath" location="D:/Program Files/Java/jdk1.5.0_03" />
+	<property name="webserver.home" location="D:/Program Files/apache-tomcat-5.5.26" />
+	<property name="webserver.deploy" location="${webserver.home}/webapps" />
+	<property name="src.dir" location="${root.dir}/src" />
+	<property name="class.dir" location="${app.dir}/WEB-INF/classes" />
+	<property name="meta.class.dir" location="${app.dir}/META-INF/classes" />
+	<property name="lib.dir" location="${app.dir}/WEB-INF/lib" />
+	<property name="meta.lib.dir" location="${app.dir}/META-INF/lib" />
+	<property name="dist.dir" location="${root.dir}/dist" />
+	<property name="doc.dir" location="${root.dir}/api" />
+	<property name="build.dir" location="${root.dir}/build" />
+
+	<property name="packages" value="com.kurui.kums.*" />
+
+
+	<!-- 设置应用环境变量-->
+	<path id="compile.classpath">
+		<pathelement path="${meta.class.dir}" />
+		<fileset dir="${meta.lib.dir}">
+			<include name="**/*.jar" />
+		</fileset>
+	</path>
+
+
+	<!-- 初始化应用程序，删除相关目录-->
+	<target name="clean" description="Delete build files">
+		<delete dir="${meta.class.dir}" />
+		<delete dir="${dist.dir}" />
+	</target>
+
+
+	<!-- 初始化创建相关应用目录   -->
+	<target name="prepare" depends="clean" description="create build,dist files">
+		<mkdir dir="${meta.class.dir}" />
+		<mkdir dir="${dist.dir}" />
+	</target>
+
+	<!-- compile 命令，执行javac编译命令 -->
+	<target name="compile" depends="prepare">
+		<javac srcdir="${src.dir}" destdir="${meta.class.dir}" debug="on">
+			<!--给编译器指定编码，防止出现："警告： 编码 GBK 的不可映射字符"-->
+			<compilerarg line="-encoding UTF-8 " />
+			<classpath refid="compile.classpath" />
+		</javac>
+
+		<copy todir="${meta.class.dir}" includeEmptyDirs="no">
+			<fileset dir="${src.dir}">
+				<include name="*.properties" />
+			</fileset>
+		</copy>
+
+		<copy todir="${meta.class.dir}/_config" includeEmptyDirs="no">
+			<fileset dir="${src.dir}/_config" />
+		</copy>
+		<copy todir="${meta.class.dir}/_resource" includeEmptyDirs="no">
+			<fileset dir="${src.dir}/_resource" />
+		</copy>
+	</target>
+
+
+	<!-- 部署应用程序，将其打war包，依赖于 compile命令 -->
+	<!--
+	<target name="dist" depends="compile">
+		<war warfile="${dist.dir}/${app.name}.war" webxml="${app.dir}/WEB-INF/web.xml" defaultexcludes="true">
+			<fileset dir="${app.dir}">
+				
+				<patternset id="notcopyojdbc14_g">
+					<exclude name="**/ojdbc14_g.jar" />
+					<exclude name="**/ojdbc14dms_g.jar" />
+					<exclude name="**/WMQ/*.*" />
+				</patternset>
+			</fileset>
+		</war>
+	</target>
+						-->
+
+	<target name="dist" depends="compile">
+		<jar destfile="${dist.dir}/${app.name}.jar">
+			<!-- 指定main-class -->
+			<manifest>
+				<attribute name="Main-class " value="insurance.mian " />
+			</manifest>
+
+			<fileset dir="${app.dir}">
+				<!--部署到WebSpere(类加载检查严格),使用p6spy.jar驱动Oracle时，同时要有dms.jar-->
+				<patternset id="notcopyojdbc14_g">
+					<exclude name="**/ojdbc14_g.jar" />
+					<exclude name="**/ojdbc14dms_g.jar" />
+					<exclude name="**/WMQ/*.*" />
+				</patternset>
+			</fileset>
+		</jar>
+	</target>
+
+
+	<!-- 生成说明文档(api)  -->
+	<!---->
+	<target name="javadoc" depends="dist">
+		<delete dir="${doc.dir}" />
+		<mkdir dir="${doc.dir}" />
+		<javadoc packagenames="${packages}" sourcepath="${src.dir}" destdir="${doc.dir}" author="true" version="true" use="true" splitindex="true" windowtitle="${app.name} API" doctitle="${app.name}">
+			<classpath refid="build.classpath" />
+		</javadoc>
+	</target>
+
+
+
+</project>

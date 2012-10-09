@@ -1,0 +1,5 @@
+
+1、将liquidlnf.jar导入到工程中
+2、在main函数中：（加上异常处理）
+UIManager.setLookAndFeel("com.birosoft.liquid.LiquidLookAndFeel");
+com.birosoft.liquid.LiquidLookAndFeel.setLiquidDecorations(true);

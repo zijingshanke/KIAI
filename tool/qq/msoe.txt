@@ -1,0 +1,2 @@
+关于当前版本的 Outlook Express 自述文件的信息，请从 Outlook Express 菜单栏
+的“帮助”菜单中选择“自述文件”。
