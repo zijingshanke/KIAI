@@ -1,0 +1,135 @@
+package insurance;
+
+import java.awt.*;
+
+import javax.swing.*;
+import java.awt.event.*;
+import java.sql.*;
+
+public class frmNote extends JFrame {
+    public frmNote() {
+        try {
+            jbInit();
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    private void jbInit() throws Exception {
+        //保存按钮事件
+        btnSave.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                String year = cmbYear.getName();
+                String month = cmbMonth.getName();
+                String day = cmbDay.getName();
+                String strsql = "insert into Note values ('" + txtTopic.getText() +
+                                "','" + year + "+" + month + "+" + day +
+                                "','" + txtAreaMain.getText() + "')";
+                try {
+                    IR.stmt.execute(strsql);
+                    frmTeam ft = new frmTeam();
+                    ft.setSize(800, 600);
+                    ft.setLocationRelativeTo(null);
+                    ft.isVisible();
+                } catch (SQLException ex) {
+                }
+
+            }
+        });
+
+        //如何把这些代码写在另外一个类里面，然后在此处调用呢？？？？？？？
+        cmbYear.addItem("2008年");
+        cmbYear.addItem("2009年");
+        cmbYear.addItem("2010年");
+        cmbYear.addItem("2011年");
+        cmbYear.addItem("2012年");
+        cmbYear.addItem("2013年");
+        cmbYear.addItem("2014年");
+        cmbYear.addItem("2015年");
+        cmbMonth.addItem("1月");
+        cmbMonth.addItem("2月");
+        cmbMonth.addItem("3月");
+        cmbMonth.addItem("6月");
+        cmbMonth.addItem("9月");
+        cmbMonth.addItem("10月");
+        cmbMonth.addItem("12月");
+        cmbDay.addItem("1日");
+        cmbDay.addItem("2日");
+        cmbDay.addItem("3日");
+        cmbDay.addItem("4日");
+        cmbDay.addItem("5日");
+        cmbDay.addItem("10日");
+        cmbDay.addItem("13日");
+        cmbDay.addItem("14日");
+        cmbDay.addItem("15日");
+        cmbDay.addItem("17日");
+        cmbDay.addItem("18日");
+        cmbDay.addItem("19日");
+        cmbDay.addItem("20日");
+        cmbDay.addItem("21日");
+        cmbDay.addItem("25日");
+        cmbDay.addItem("26日");
+        cmbDay.addItem("28日");
+        cmbDay.addItem("30日");
+        getContentPane().setLayout(null);
+        this.setResizable(false);
+        this.setTitle("职　业　日　志");
+        lblTitle.setFont(new java.awt.Font("隶书", Font.PLAIN, 30));
+        lblTitle.setForeground(Color.blue);
+        lblTitle.setBorder(BorderFactory.createEtchedBorder());
+        lblTitle.setText("主题");
+        lblTitle.setBounds(new Rectangle(23, 17, 81, 32));
+        txtTopic.setText("");
+        txtTopic.setBounds(new Rectangle(116, 18, 279, 31));
+        jLabel1.setFont(new java.awt.Font("隶书", Font.PLAIN, 30));
+        jLabel1.setForeground(Color.blue);
+        jLabel1.setBorder(BorderFactory.createEtchedBorder());
+        jLabel1.setText("日期");
+        jLabel1.setBounds(new Rectangle(26, 69, 79, 32));
+        cmbYear.setBounds(new Rectangle(118, 69, 92, 28));
+        cmbDay.setBounds(new Rectangle(330, 70, 67, 29));
+        cmbMonth.setBounds(new Rectangle(234, 69, 69, 28));
+        jScrollPane1.getViewport().setBackground(Color.white);
+        jScrollPane1.setBorder(BorderFactory.createEtchedBorder());
+        jScrollPane1.setBounds(new Rectangle(30, 125, 387, 350));
+        txtAreaMain.setBorder(BorderFactory.createLoweredBevelBorder());
+        txtAreaMain.setDisabledTextColor(Color.white);
+        txtAreaMain.setText("");
+        btnSaveAs.setBounds(new Rectangle(175, 496, 130, 30));
+        btnSaveAs.setFont(new java.awt.Font("Dialog", Font.PLAIN, 20));
+        btnSaveAs.setForeground(Color.red);
+        btnSaveAs.setToolTipText("");
+        btnSaveAs.setText("存为草稿");
+        btnSave.setBounds(new Rectangle(37, 497, 91, 31));
+        btnSave.setFont(new java.awt.Font("Dialog", Font.PLAIN, 25));
+        btnSave.setForeground(Color.blue);
+        btnSave.setText("保存");
+        btnExit.setBounds(new Rectangle(343, 497, 74, 28));
+        btnExit.setFont(new java.awt.Font("Dialog", Font.PLAIN, 20));
+        btnExit.setForeground(Color.magenta);
+        btnExit.setText("退出");
+        this.getContentPane().add(lblTitle);
+        this.getContentPane().add(txtTopic);
+        this.getContentPane().add(jLabel1);
+        this.getContentPane().add(cmbYear);
+        this.getContentPane().add(cmbMonth);
+        this.getContentPane().add(cmbDay);
+        this.getContentPane().add(jScrollPane1);
+        this.getContentPane().add(btnSave);
+        this.getContentPane().add(btnSaveAs);
+        this.getContentPane().add(btnExit);
+        jScrollPane1.getViewport().add(txtAreaMain);
+    }
+
+    JLabel lblTitle = new JLabel();
+    JTextField txtTopic = new JTextField();
+    JLabel jLabel1 = new JLabel();
+    JComboBox cmbYear = new JComboBox();
+    JComboBox cmbDay = new JComboBox();
+    JComboBox cmbMonth = new JComboBox();
+    JScrollPane jScrollPane1 = new JScrollPane();
+    JTextArea txtAreaMain = new JTextArea();
+    JButton btnSaveAs = new JButton();
+    JButton btnSave = new JButton();
+    JButton btnExit = new JButton();
+}
